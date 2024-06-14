@@ -1,0 +1,85 @@
+﻿@model IEnumerable<UserManagement.Models.User>
+
+@{
+    ViewData["Title"] = "Users List";
+}
+
+<h1>Users List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mobile)
+                </td>
+                <td>
+                    @{
+                        var birthdayDate = item.Birthday.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                    }
+                    @Html.DisplayFor(modelItem => birthdayDate)
+                </td>
+
+                <td>
+                    @{
+                        string genderText;
+                        if (item.Gender == 1)
+                        {
+                            genderText = "Male";
+                        }
+                        else if (item.Gender == 2)
+                        {
+                            genderText = "Female";
+                        }
+                        else if (item.Gender == 3)
+                        {
+                            genderText = "Other";
+                        }
+                        else
+                        {
+                            genderText = "Unknown";
+                        }
+                    }
+                    @genderText
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
